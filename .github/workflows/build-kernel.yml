@@ -216,7 +216,8 @@ jobs:
             cat arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG_EXTRA }} >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         fi
         if [ ${{ env.APPLY_KSU_PATCH }} = true ]; then
-            bash $GITHUB_WORKSPACE/patches/patches.sh
+            #bash $GITHUB_WORKSPACE/patches/patches.sh
+            patch < $GITHUB_WORKSPACE/patches/sukisu-ultra/kernel-4.19_5.4.patch
             if grep -q "CONFIG_KSU" arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}; then
                 sed -i 's/# CONFIG_KSU is not set/CONFIG_KSU=y/g' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
                 sed -i 's/CONFIG_KSU=n/CONFIG_KSU=y/g' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
